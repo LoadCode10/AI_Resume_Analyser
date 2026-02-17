@@ -38,34 +38,37 @@ A powerful Node.js application that leverages Google's Gemini AI to analyze resu
 
 ## 🔧 Installation
 
-1. **Clone the repository**
+1. **Install dependencies**
    ```bash
-   git clone https://github.com/LoadCode/AI_Resume_Analyser.git
-   cd ai-resume-analyzer
-Install dependencies
+   npm install
+   ```
 
-bash
-npm install
-Set up environment variables
-Create a .env file in the root directory:
+2. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   PORT=5050
+   ```
 
-env
-GEMINI_API_KEY=your_gemini_api_key_here
-PORT=5050
-Create upload directory
+3. **Create upload directory**
+   ```bash
+   mkdir uploads
+   ```
 
-bash
-mkdir uploads
-Start the server
+4. **Start the server**
+   ```bash
+   npm start
+   ```
+   
+   or for development with nodemon:
+   ```bash
+   npm run dev
+   ```
 
-bash
-npm start
-or for development with nodemon:
-
-bash
-npm run dev
 ## 📁 Project Structure
-text
+
+```
 ai-resume-analyzer/
 ├── middlewares/
 │   └── upload.js           # Multer configuration for file uploads
@@ -85,17 +88,20 @@ ai-resume-analyzer/
 ├── .env                      # Environment variables
 ├── package.json
 └── server.js                 # Main application file
-🔌 API Endpoints
-1. Upload and Analyze Resume
-POST /api/upload
+```
 
-Content-Type: multipart/form-data
+## 🔌 API Endpoints
 
-Body: file: [resume.pdf or resume.docx]
+### 1. Upload and Analyze Resume
 
-Response:
+**POST** `/api/upload`
 
-json
+**Request:**
+- Content-Type: `multipart/form-data`
+- Body: `file: [resume.pdf or resume.docx]`
+
+**Response:**
+```json
 {
   "message": "File uploaded & analyzed successfully!",
   "file": {
@@ -112,20 +118,20 @@ json
     "projects_to_do": ["Build a full-stack application with TypeScript"]
   }
 }
-2. Match CV with Job Description
-POST /api/cv-analyse
+```
 
-Content-Type: multipart/form-data
+### 2. Match CV with Job Description
 
-Body:
+**POST** `/api/cv-analyse`
 
-cv: [resume.pdf]
+**Request:**
+- Content-Type: `multipart/form-data`
+- Body:
+  - `cv: [resume.pdf]`
+  - `job: [job-description.pdf]`
 
-job: [job-description.pdf]
-
-Response (score ≥ 60%):
-
-json
+**Response (score ≥ 60%):**
+```json
 {
   "message": "Files uploaded & analyzed successfully!",
   "files": {
@@ -141,9 +147,10 @@ json
     "improvement": null
   }
 }
-Response (score < 60%):
+```
 
-json
+**Response (score < 60%):**
+```json
 {
   "message": "Files uploaded & analyzed successfully!",
   "files": {
@@ -163,93 +170,85 @@ json
     }
   }
 }
-🧠 How It Works
-File Upload: Users upload PDF/DOCX files through the API
+```
 
-Text Extraction: The system extracts text content from uploaded files
+## 🧠 How It Works
 
-Text Processing: Extracted text is cleaned and optimized for AI analysis
+1. **File Upload**: Users upload PDF/DOCX files through the API
+2. **Text Extraction**: The system extracts text content from uploaded files
+3. **Text Processing**: Extracted text is cleaned and optimized for AI analysis
+4. **AI Analysis**: Google Gemini AI processes the text with carefully crafted prompts
+5. **Response Parsing**: AI responses are parsed into structured JSON format
+6. **Results Delivery**: Analysis results are returned to the user
 
-AI Analysis: Google Gemini AI processes the text with carefully crafted prompts
+## 🎯 Use Cases
 
-Response Parsing: AI responses are parsed into structured JSON format
+- **Job Seekers**: Optimize resumes and understand skill gaps
+- **Recruiters**: Quick initial screening of candidates
+- **Career Coaches**: Provide data-driven advice to clients
+- **Students**: Identify skills needed for target roles
 
-Results Delivery: Analysis results are returned to the user
+## ⚙️ Configuration
 
-🎯 Use Cases
-Job Seekers: Optimize resumes and understand skill gaps
-
-Recruiters: Quick initial screening of candidates
-
-Career Coaches: Provide data-driven advice to clients
-
-Students: Identify skills needed for target roles
-
-⚙️ Configuration
-File Upload Limits
-Edit middlewares/upload.js:
-
-javascript
+### File Upload Limits
+Edit `middlewares/upload.js`:
+```javascript
 limits: {
   fileSize: 50 * 1024 * 1024 // 50MB max
 }
-Allowed File Types
-javascript
+```
+
+### Allowed File Types
+```javascript
 const allowed = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 ];
-🧪 Testing
+```
+
+## 🧪 Testing
+
 Use Postman or similar tools to test the APIs:
 
-Resume Analysis Test:
-
-bash
+**Resume Analysis Test:**
+```bash
 curl -X POST http://localhost:5050/api/upload \
   -F "file=@/path/to/your/resume.pdf"
-CV-Job Matching Test:
+```
 
-bash
+**CV-Job Matching Test:**
+```bash
 curl -X POST http://localhost:5050/api/cv-analyse \
   -F "cv=@/path/to/your/resume.pdf" \
   -F "job=@/path/to/job-description.pdf"
-⚠️ Error Handling
-400 Bad Request: Missing files or invalid file types
+```
 
-404 Not Found: Invalid routes
+## ⚠️ Error Handling
 
-500 Internal Server Error: Server-side issues
+- **400 Bad Request**: Missing files or invalid file types
+- **404 Not Found**: Invalid routes
+- **500 Internal Server Error**: Server-side issues
+- Custom 404 page for HTML requests
 
-Custom 404 page for HTML requests
+## 🔒 Security Considerations
 
-🔒 Security Considerations
-File type validation to prevent malicious uploads
+- File type validation to prevent malicious uploads
+- File size limits to prevent DoS attacks
+- API key stored in environment variables
+- No persistent storage of uploaded files (auto-delete recommended for production)
 
-File size limits to prevent DoS attacks
+## 🚀 Future Enhancements
 
-API key stored in environment variables
+- Add DOCX text extraction
+- Implement file auto-deletion after analysis
+- Add user authentication
+- Create frontend dashboard
+- Support for batch processing
+- Export reports in PDF format
+- Add more AI models as alternatives
 
-No persistent storage of uploaded files (auto-delete recommended for production)
+## 🙏 Acknowledgments
 
-🚀 Future Enhancements
-Add DOCX text extraction
-
-Implement file auto-deletion after analysis
-
-Add user authentication
-
-Create frontend dashboard
-
-Support for batch processing
-
-Export reports in PDF format
-
-Add more AI models as alternatives
-🙏 Acknowledgments
-Google Gemini AI for powerful AI capabilities
-
-pdf-parse for PDF text extraction
-
-Multer for file upload handling
-
-
+- Google Gemini AI for powerful AI capabilities
+- pdf-parse for PDF text extraction
+- Multer for file upload handling
