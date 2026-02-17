@@ -64,7 +64,7 @@ or for development with nodemon:
 
 bash
 npm run dev
-📁 Project Structure
+## 📁 Project Structure
 text
 ai-resume-analyzer/
 ├── middlewares/
@@ -245,28 +245,6 @@ Support for batch processing
 Export reports in PDF format
 
 Add more AI models as alternatives
-
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-👥 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-Fork the repository
-
-Create your feature branch (git checkout -b feature/AmazingFeature)
-
-Commit your changes (git commit -m 'Add some AmazingFeature')
-
-Push to the branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
-
-📧 Contact
-Your Name - @yourtwitter - email@example.com
-
-Project Link: https://github.com/LoadCode/AI_Resume_Analyser.git
-
 🙏 Acknowledgments
 Google Gemini AI for powerful AI capabilities
 
@@ -274,13 +252,4 @@ pdf-parse for PDF text extraction
 
 Multer for file upload handling
 
-text
 
-**Key formatting rules I applied:**
-1. Headers use `#` symbols (more `#` = smaller header)
-2. Lists use `-` or `*` with proper indentation
-3. Code blocks use triple backticks ```` with language specification
-4. Bold text uses `**double asterisks**`
-5. Line breaks need an empty line between sections
-6. Nested lists require indentation (2 spaces)
-7. Horizontal rules use `---`
